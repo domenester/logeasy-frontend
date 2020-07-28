@@ -2,8 +2,6 @@ import React from 'react';
 import { useState } from 'react';
 import ProviderGenerator from '../shared/provider-generator'
 import io from 'socket.io-client'
-import { buildLogKey } from '../utils/log.utils';
-import { LogStateProvider, useLogStateValue } from '../shared/state-handler/logs';
 import { ConfigurationServiceProvider, useConfigurationServiceValue } from './configuration.service';
 import { LogServiceProvider, useLogServiceValue } from './log.service';
 

@@ -12,7 +12,7 @@ interface ILog {
 export type TDataHashed = { [key: string]: string[] }
 
 const useBuildValue = () => {
-  const { state, dispatch } = useLogStateValue()
+  const { dispatch } = useLogStateValue()
 
   const handleLogs = (logs: ILog[]) => {
     const logsHashed: TDataHashed = {}

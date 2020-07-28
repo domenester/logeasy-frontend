@@ -80,6 +80,7 @@ export const Sidebar = () => {
     return () => {
       offAppend()
     }
+  // eslint-disable-next-line
   }, []);
 
   const { configs } = useConfigurationServiceValue()
