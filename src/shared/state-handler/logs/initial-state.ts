@@ -1,3 +1,3 @@
-import { TDataHashed } from "../../../service/socket.sevice";
+import { TLogMetadataHashed } from "../../../service/log.service";
 
-export default () => ({} as TDataHashed)
+export default () => ({} as TLogMetadataHashed)

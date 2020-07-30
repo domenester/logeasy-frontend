@@ -3,22 +3,29 @@ import ProviderGenerator from '../shared/provider-generator'
 import { buildLogKey } from '../utils/log.utils';
 import { LogStateProvider, useLogStateValue } from '../shared/state-handler/logs'
 
-interface ILog {
-  stream: string,
-  name: string,
-  messages: string []
+export interface ILogMetadata {
+  severity: string
+  message: string
+  date: Date
 }
 
+export interface ILog {
+  stream: string,
+  name: string,
+  logs: ILogMetadata[]
+}
+
+export type TLogMetadataHashed = { [key: string]: ILogMetadata[] }
 export type TDataHashed = { [key: string]: string[] }
 
 const useBuildValue = () => {
   const { dispatch } = useLogStateValue()
 
   const handleLogs = (logs: ILog[]) => {
-    const logsHashed: TDataHashed = {}
-    logs.forEach( ({stream, name, messages}) => {
+    const logsHashed: TLogMetadataHashed = {}
+    logs.forEach( ({stream, name, logs}) => {
       if (!logsHashed[buildLogKey(stream, name)]) {
-        logsHashed[buildLogKey(stream, name)] = messages
+        logsHashed[buildLogKey(stream, name)] = logs
       }
     })
     dispatch({type: 'setLogs', payload: logsHashed})

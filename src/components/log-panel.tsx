@@ -4,6 +4,7 @@ import { useSidebarStateValue } from '../shared/state-handler'
 import { makeStyles, Theme, createStyles } from '@material-ui/core';
 import { drawerWidth } from './sidebar';
 import { useLogStateValue } from '../shared/state-handler/logs';
+import moment from 'moment-timezone'
 
 const padding = 10
 const useStyles = makeStyles((theme: Theme) =>
@@ -32,17 +33,37 @@ function LogPanel() {
     lastMessageEl && lastMessageEl.scrollIntoView({ behavior: "smooth" });
   })
 
+  const getSeverityStyle = (severity: string) => {
+    switch (severity) {
+      case 'error': return 'red'
+      case 'warn': return 'yellow'
+      case 'info': return 'blue'
+    }
+  }
+
   return (
     <main className={classes.content}>
       <Paper className={classes.paper}>
         {
           hasMessage() &&
           logState[selectedStreamAndName].map(
-            (message, index) => <div ref={(el) => {
+            (log, index) => <div ref={(el) => {
               if (index === logState[selectedStreamAndName].length - 1) {
                 setLastMessageEl(el);
               }
-            }}> {message} </div>
+            }}>
+              <label style={{color: getSeverityStyle(log.severity), fontWeight: 'bold'}}>
+                {log.severity.toUpperCase()}
+              </label>
+              <label style={{color: 'grey', fontWeight: 'bold'}}>
+                &nbsp; [{
+                  moment(new Date(log.date)).tz('America/Sao_Paulo').format('DD/MM/YYYY - HH:mm:ss')
+                }]:
+              </label>
+              <label>
+                &nbsp;{log.message}
+              </label>
+            </div>
           )
         }
         {

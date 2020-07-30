@@ -17,11 +17,12 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import FiberManualRecordSharpIcon from '@material-ui/icons/FiberManualRecordSharp';
 import FiberManualRecordOutlinedIcon from '@material-ui/icons/FiberManualRecordOutlined';
 
-import { useSocketServiceValue, IOnAppend, TDataHashed } from "../service/socket.sevice";
+import { useSocketServiceValue, IOnAppend } from "../service/socket.sevice";
 import { useSidebarStateValue } from "../shared/state-handler";
 import { buildLogKey } from "../utils/log.utils";
 import { useLogStateValue } from "../shared/state-handler/logs";
 import { useConfigurationServiceValue } from "../service/configuration.service";
+import { TLogMetadataHashed } from "../service/log.service";
 
 export const drawerWidth = 240;
 
@@ -60,12 +61,12 @@ export const Sidebar = () => {
   const { onAppend, offAppend } = useSocketServiceValue()
 
   const onAppendHandler = (
-    {stream, name, message}: IOnAppend,
+    {stream, name, log}: IOnAppend,
     logDispatch: React.Dispatch<any>,
-    logState: TDataHashed
+    logState: TLogMetadataHashed
   ) => {
     const key = buildLogKey(stream, name)
-    const appendMessage = {[key]: [...logState[key], message]}
+    const appendMessage = {[key]: [...logState[key], log]}
     logDispatch({type: 'setLogs', payload: appendMessage})
   }
 

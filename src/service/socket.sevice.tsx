@@ -3,9 +3,9 @@ import { useState } from 'react';
 import ProviderGenerator from '../shared/provider-generator'
 import io from 'socket.io-client'
 import { ConfigurationServiceProvider, useConfigurationServiceValue } from './configuration.service';
-import { LogServiceProvider, useLogServiceValue } from './log.service';
+import { LogServiceProvider, useLogServiceValue, ILog, ILogMetadata } from './log.service';
 
-const socket = io('http://localhost:3666')
+const socket = io('http://0.0.0.0:3666')
 
 interface IConfig {
   stream: string,
@@ -13,16 +13,10 @@ interface IConfig {
   path: string
 }
 
-interface ILog {
-  stream: string,
-  name: string,
-  messages: string []
-}
-
 export interface IOnAppend {
   stream: string,
   name: string,
-  message: string
+  log: ILogMetadata
 }
 
 export type TDataHashed = { [key: string]: string[] }
